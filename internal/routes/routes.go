@@ -38,6 +38,10 @@ type server struct {
 func (s *server) Start(ctx context.Context) error {
 	s.registerMiddlewares()
 	s.setRoutes()
+	go func() {
+		<-ctx.Done()
+		s.mux.Shutdown(ctx)
+	}()
 	return s.mux.Start(s.port)
 }
 

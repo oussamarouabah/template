@@ -27,7 +27,8 @@ func New(cfg *Config) *Application {
 }
 
 func (a *Application) Start(ctx context.Context) {
-
+	a.server.Start(ctx)
+	close(a.done)
 }
 
 func (a *Application) Done() chan struct{} {
